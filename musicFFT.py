@@ -1,3 +1,5 @@
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import matplotlib.gridspec as gridspec
 from scipy.io import wavfile # get the api
@@ -16,7 +18,10 @@ if __name__ == '__main__':
 
     #IMPORT .wav file and change from stereo to mono
     wav_sampleRate, wav_data = wavfile.read('BillyJoel-Vienna.wav') #Get WAV Sample Rate (samples/sec) and Data
-    wav_data = stereoToMono(wav_data) #Stereo to Mono (Combine Left and Right channel of WAV data)
+
+    #Make a stereo track mono
+    if np.array(wav_data).ndim == 2:
+        wav_data = stereoToMono(wav_data) #Stereo to Mono (Combine Left and Right channel of WAV data)
 
     #Discrete Time Signal
     ampl = wav_data #signal amplitude vector
