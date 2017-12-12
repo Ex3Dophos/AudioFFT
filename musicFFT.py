@@ -1,5 +1,5 @@
 import matplotlib
-matplotlib.use('Agg')
+matplotlib.use('TkAgg')
 import matplotlib.pyplot as plt
 import matplotlib.gridspec as gridspec
 from scipy.io import wavfile # get the api
@@ -17,7 +17,7 @@ def stereoToMono(audiodata):
 if __name__ == '__main__':
 
     #IMPORT .wav file and change from stereo to mono
-    wav_sampleRate, wav_data = wavfile.read('BillyJoel-Vienna.wav') #Get WAV Sample Rate (samples/sec) and Data
+    wav_sampleRate, wav_data = wavfile.read('disconnect_me.wav') #Get WAV Sample Rate (samples/sec) and Data
 
     #Make a stereo track mono
     if np.array(wav_data).ndim == 2:
@@ -75,5 +75,5 @@ if __name__ == '__main__':
 
 
     plt.tight_layout()
-    # plt.show()
-    plt.savefig('AudioFFT.png')
+    plt.show()
+    #plt.savefig('AudioFFT.png')
