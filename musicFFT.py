@@ -24,18 +24,19 @@ if __name__ == '__main__':
         wav_data = stereoToMono(wav_data) #Stereo to Mono (Combine Left and Right channel of WAV data)
 
     #Discrete Time Signal
-    ampl = wav_data #signal amplitude vector
+    ampl = np.abs(wav_data) #signal amplitude vector
     fs = wav_sampleRate #signal sample rate
     N = wav_data.size #number of samples in wav_data
     #t = np.arange(N)/fs #time of each sample vector
     t = np.linspace(0, N/fs, N) #time of each sample vector
 
     #Fast Fourier Transform
-    dft = np.fft.fft(wav_data) #DFT vector (Complex Numbers)
-    dft_phase = np.angle(dft) #DFT Phase (Angle in rads)
-    dft_ampl = np.abs(dft) #DFT Amplitude (Magnitude)
+    dft = np.fft.rfft(wav_data) #DFT vector (Complex Numbers)
+    dft_angle = np.angle(dft)   #DFT Angle (Radians)
+    dft_phase = np.unwrap(dft_angle) #DFT Phase (Radians)
+    dft_magnitude = np.abs(dft)/N*2 #Scaled DFT Magnitude (Amplitude)
     dt = 1/float(fs) #sample spacing (inverse of sample rate)
-    f = np.fft.fftfreq(N,dt) #DFT sample frequency vector
+    f = np.fft.rfftfreq(N,dt) #DFT sample frequency vector
 
     ####################################
     ##PLOTTING
@@ -50,7 +51,6 @@ if __name__ == '__main__':
     sp1.set_title('Signal')
     sp1.set_ylabel('Amplitude') # x(t)
     sp1.set_xlabel('Time (s)')
-    sp1.set_xticks(np.arange(0, roundup(max(t),15)+1, 15))
     sp1.grid('on')
     plt.plot(t,ampl) #(time, amplitude)
 
@@ -61,13 +61,12 @@ if __name__ == '__main__':
     sp2.set_xlabel('Frequency (Hz)')
     sp2.set_xscale('log')
     sp2.grid('on')
-    plt.plot(f,dft_ampl) #(frequency, amplitude)
+    plt.plot(f,dft_magnitude) #(frequency, amplitude)
 
     #Phase vs Frequency
     sp3 = plt.subplot(gs[2,:]) # row 2, span all columns
     sp3.set_title('Phase Spectrum')
-    sp3.set_ylabel('Phase (rads)') # ∠X(k)
-    sp3.set_yticks(np.arange(-math.pi, math.pi+1, math.pi/2))
+    sp3.set_ylabel('Phase (radians)') # ∠X(k)
     sp3.set_xlabel('Frequency (Hz)')
     sp3.set_xscale('log')
     sp3.grid('on')
