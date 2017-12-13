@@ -18,7 +18,7 @@ def stereoToMono(audiodata):
 if __name__ == '__main__':
 
     #IMPORT .wav file and change from stereo to mono
-    wav_sampleRate, wav_data = wavfile.read('disconnect_me.wav') #Get WAV Sample Rate (samples/sec) and Data
+    wav_sampleRate, wav_data = wavfile.read('vienna.wav') #Get WAV Sample Rate (samples/sec) and Data
 
     #Make a stereo track mono
     if np.array(wav_data).ndim == 2:
