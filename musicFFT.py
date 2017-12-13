@@ -70,7 +70,8 @@ if __name__ == '__main__':
     sp3.set_xlabel('Frequency (Hz)')
     sp3.set_xscale('log')
     sp3.grid('on')
-    plt.plot(f, dft_phase); #(frequency, phase)
+    # plt.plot(f, dft_phase); #(frequency, phase)
+    plt.phase_spectrum(wav_data, fs)
 
 
     plt.tight_layout()
