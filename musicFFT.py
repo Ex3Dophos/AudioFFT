@@ -1,5 +1,6 @@
 import matplotlib
 matplotlib.use('TkAgg')
+import matplotlib.ticker as tk
 import matplotlib.pyplot as plt
 import matplotlib.gridspec as gridspec
 from scipy.io import wavfile # get the api
@@ -32,6 +33,11 @@ if __name__ == '__main__':
 
     #Fast Fourier Transform
     dft = np.fft.rfft(wav_data) #DFT vector (Complex Numbers)
+
+    # detect noise (very small numbers) and ignore
+    threshold = max(abs(dft))/10000
+    dft[abs(dft)<threshold] = 0
+
     dft_angle = np.angle(dft)   #DFT Angle (Radians)
     dft_phase = np.unwrap(dft_angle) #DFT Phase (Radians)
     dft_magnitude = np.abs(dft)/N*2 #Scaled DFT Magnitude (Amplitude)
@@ -70,8 +76,12 @@ if __name__ == '__main__':
     sp3.set_xlabel('Frequency (Hz)')
     sp3.set_xscale('log')
     sp3.grid('on')
-    # plt.plot(f, dft_phase); #(frequency, phase)
-    plt.phase_spectrum(wav_data, fs)
+    # base = (max(dft_phase/math.pi) - min(dft_phase/math.pi))/4
+    # sp3.yaxis.set_major_formatter(tk.FormatStrFormatter('%g $\pi$'))
+    # sp3.yaxis.set_major_locator(matplotlib.ticker.MultipleLocator(base=base))
+    # plt.plot(f, dft_phase/math.pi); #(frequency, phase)
+    plt.plot(f, dft_phase)
+    # plt.phase_spectrum(wav_data, fs)
 
 
     plt.tight_layout()
