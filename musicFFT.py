@@ -76,14 +76,7 @@ if __name__ == '__main__':
     sp3.set_xlabel('Frequency (Hz)')
     sp3.set_xscale('log')
     sp3.grid('on')
-    # base = (max(dft_phase/math.pi) - min(dft_phase/math.pi))/4
-    # sp3.yaxis.set_major_formatter(tk.FormatStrFormatter('%g $\pi$'))
-    # sp3.yaxis.set_major_locator(matplotlib.ticker.MultipleLocator(base=base))
-    # plt.plot(f, dft_phase/math.pi); #(frequency, phase)
     plt.plot(f, dft_phase)
-    # plt.phase_spectrum(wav_data, fs)
-
 
     plt.tight_layout()
     plt.show()
-    #plt.savefig('AudioFFT.png')
